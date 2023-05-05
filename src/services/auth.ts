@@ -27,6 +27,12 @@ export type Profile = {
 }
 
 export const AuthAPI = {
+  isAuthCookies: () => {
+    const access_token = Cookies.get('access_token')
+    const refresh_token = Cookies.get('refresh_token')
+
+    return !!access_token && !!refresh_token
+  },
   login: async (params: LoginParams): Promise<UserDataType> => {
     const response = await request
       .request({
@@ -52,10 +58,13 @@ export const AuthAPI = {
 
     return response.data
   },
-  profileServerSide: async (access_token: string): Promise<Profile> => {
+  profile: async (): Promise<Profile> => {
+    const access_token = Cookies.get('access_token')
     const refresh_token = Cookies.get('refresh_token')
-    return axios
-      .get<Profile>(`${process.env.REACT_APP_API_URL_PROD}${endpoints.profileEndpoint}`, {
+    return await request
+      .request({
+        url: endpoints.profileEndpoint,
+        method: 'GET',
         headers: access_token
           ? {
               Authorization: `Bearer ${access_token}`,
@@ -71,7 +80,7 @@ export const AuthAPI = {
         return Promise.reject(error)
       })
   },
-  me: async () => {
+  me: async (): Promise<UserDataType> => {
     const access_token = Cookies.get('access_token')
     const refresh_token = Cookies.get('refresh_token')
     const response = await request

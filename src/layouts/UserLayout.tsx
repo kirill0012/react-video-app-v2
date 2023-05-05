@@ -71,8 +71,6 @@ const UserLayout = (props: Props) => {
       </MainContentWrapper>
     </VerticalLayoutWrapper>
   )
-
-  // const auth = useAuth()
 }
 
 export default UserLayout

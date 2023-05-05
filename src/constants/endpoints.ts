@@ -2,7 +2,7 @@ const endpoints = {
   meEndpoint: 'auth/me',
   loginEndpoint: '/auth/login',
   logoutEndpoint: '/auth/logout',
-  profileEndpoint: 'user/profile',
+  profileEndpoint: '/user/profile',
   ideaGenerateEndpoint: '/concepts/get_ad_summary',
   getGenerationEndpoint: '/concepts/generation',
   conceptGenerateEndpoint: '/concepts/generate',

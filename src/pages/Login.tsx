@@ -25,10 +25,14 @@ import { yupResolver } from '@hookform/resolvers/yup'
 // ** Layout Import
 import BlankLayout from '../layouts/BlankLayout'
 
-import { useAuth } from '../hooks/useAuth'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+
+import { setUser } from '../redux/reducers/userReducer'
 
 // ** Analytics Import
 import { Mixpanel } from '../utils/Mixpanel'
+import { AuthAPI } from '../services/auth'
 
 // ** Styled Components
 const AuthIllustrationWrapper = styled(Box)<BoxProps>(() => ({
@@ -56,7 +60,8 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   // ** Hooks
-  const auth = useAuth()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const {
     control,
@@ -73,12 +78,24 @@ const LoginPage = () => {
     const { email, password } = data
     Mixpanel.track('Login', { email: email })
     Mixpanel.identify(email)
-    auth.login({ email, password }, () => {
-      setError('email', {
-        type: 'manual',
-        message: 'Email or Password is invalid',
+    AuthAPI.login({ email, password })
+      .then((user) => {
+        dispatch(setUser(user))
+        navigate('/')
       })
-    })
+      .catch(() => {
+        setError('email', {
+          type: 'manual',
+          message: 'Email or Password is invalid',
+        })
+      })
+    //dispatch(setUser(checked))
+    // auth.login({ email, password }, () => {
+    //   setError('email', {
+    //     type: 'manual',
+    //     message: 'Email or Password is invalid',
+    //   })
+    // })
   }
 
   return (

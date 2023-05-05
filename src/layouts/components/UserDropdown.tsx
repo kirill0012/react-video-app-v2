@@ -14,7 +14,10 @@ import { deepPurple } from '@mui/material/colors'
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew'
 
 // ** Context
-import { useAuth } from '../../hooks/useAuth'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { getUser, setUser } from '../../redux/reducers/userReducer'
+import { AuthAPI } from '../../services/auth'
 
 // ** Styled Components
 const BadgeContentSpan = styled('span')(({ theme }) => ({
@@ -31,7 +34,8 @@ const UserDropdown = () => {
 
   // ** Hooks
   const navigate = useNavigate()
-  const { logout, user } = useAuth()
+  const user = useSelector(getUser)
+  const dispatch = useDispatch()
 
   if (!user) {
     return null
@@ -49,7 +53,15 @@ const UserDropdown = () => {
   }
 
   const handleLogout = () => {
-    logout()
+    AuthAPI.logout()
+      .then(async () => {
+        dispatch(setUser(null))
+        navigate('/login')
+        return null
+      })
+      .catch(() => {
+        //
+      })
     handleDropdownClose()
   }
 
