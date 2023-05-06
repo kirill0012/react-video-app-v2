@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { setUser, setProfile } from '../redux/reducers/userReducer'
-import { getRequestPending } from '../redux/reducers/genReducer'
+import { getRequestPending, loadGenerations } from '../redux/reducers/genReducer'
 import { AuthAPI } from '../services/auth'
 
 // ** Layout Import
@@ -14,6 +14,8 @@ import UserLayout from '../layouts/UserLayout'
 import MyProject from '../components/MyProject'
 import IdeaRequest from '../components/Idea/Request'
 import IdeaConfirmation from '../components/Idea/Confirmation'
+import ConceptsList from '../components/Concept/List'
+import { ConceptsAPI } from '../services/concepts'
 
 function Index() {
   // ** Hooks
@@ -43,6 +45,14 @@ function Index() {
       })
       .catch(() => {
         navigate('/login')
+      })
+
+    ConceptsAPI.listConcepts()
+      .then((generations) => {
+        dispatch(loadGenerations(generations))
+      })
+      .catch((error) => {
+        console.log(error)
       })
   }, [])
 
@@ -79,30 +89,8 @@ function Index() {
               </div>
             </div>
           )}
-          <IdeaConfirmation
-          // idea={conceptIdea.idea}
-          // onConfirm={onConceptIdeaConfirm}
-          // onRegenerate={onConceptIdeaRegenerate}
-          />
-          {/* 
-          {generations.length == 0 && !conceptIdea && !isGeneratingIdea && (
-            <Typography
-              sx={{
-                fontSize: '20px',
-                fontWeight: '700',
-                color: '#81848F',
-                textAlign: 'center',
-              }}
-            >
-              You still didn’t generate any videos!
-            </Typography>
-          )}
-          <ConceptsList
-            generations={generations}
-            onCancel={onCancelGeneration}
-            onIterateVideo={onIterateVideo}
-            iterationDisabled={iterationDisabled}
-          /> */}
+          <IdeaConfirmation />
+          <ConceptsList />
         </Grid>
         <Grid item sx={{ width: '406px', pl: '0px !important' }}>
           <IdeaRequest />

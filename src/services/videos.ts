@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 
 export const VideosAPI = {
   rate: async (
-    videoId: number,
+    videoId: string,
     name: string,
     rating: number,
     feedback: string

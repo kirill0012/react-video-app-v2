@@ -2,7 +2,6 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 import { Generation } from '../../services/concepts'
 import { IdeaItem, IdeaRequest } from '../../services/ideas'
-import { RequestFormData } from '../../components/Idea/Request'
 
 type GenState = {
   generations: Generation[]
@@ -29,7 +28,20 @@ export const gen = createSlice({
       const genIds = state.generations.map((g) => g.id)
       if (!genIds.includes(action.payload.id)) {
         state.generations = [...state.generations, action.payload]
+      } else {
+        state.generations = state.generations.map((g) =>
+          g.id === action.payload.id ? action.payload : g
+        )
       }
+    },
+    cancelVideo: (state, action: PayloadAction<string>) => {
+      const newGen = state.generations.map((gen) => {
+        gen.videos = gen.videos.filter((vid) => {
+          return vid.id !== action.payload
+        })
+        return gen
+      })
+      state.generations = newGen.filter((gen) => gen.videos.length > 0)
     },
     setRequest: (state, action: PayloadAction<IdeaRequest | null>) => {
       state.request = action.payload
@@ -43,8 +55,14 @@ export const gen = createSlice({
   },
 })
 
-export const { loadGenerations, addGeneration, setRequest, setRequestRunning, setIdea } =
-  gen.actions
+export const {
+  loadGenerations,
+  addGeneration,
+  cancelVideo,
+  setRequest,
+  setRequestRunning,
+  setIdea,
+} = gen.actions
 
 export const getGenerations = (state: RootState) => state.gen.generations
 export const getRequest = (state: RootState) => state.gen.request

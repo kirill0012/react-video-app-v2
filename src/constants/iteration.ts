@@ -14,7 +14,7 @@ export const subjects = [
   {
     id: 3,
     label: 'Music',
-  }
+  },
   // {
   //   id: 4,
   //   label: 'Live action',

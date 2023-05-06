@@ -19,8 +19,8 @@ export type VideoItem = {
   eta?: Date | string
   created: Date | string
   in_progress: boolean
-  generation: Generation
-  generation_id: number
+  // generation: Omit<Generation, 'videos'>
+  // generation_id: number
 }
 
 export interface TextEditInput {
@@ -63,7 +63,7 @@ export const ConceptsAPI = {
 
     return Promise.resolve(response.data)
   },
-  cancelGeneration: async (id: number): Promise<boolean> => {
+  cancelGeneration: async (id: string): Promise<boolean> => {
     const access_token = Cookies.get('access_token')
 
     await request
@@ -120,7 +120,7 @@ export const ConceptsAPI = {
     return Promise.resolve(response.data)
   },
   iterateConcept: async (
-    videoId: number,
+    videoId: string,
     subject: Array<number>,
     transcript: string,
     remove: Array<number>

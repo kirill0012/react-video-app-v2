@@ -275,6 +275,117 @@ app.post('/concepts/get_ad_summary', (req, res) => {
   }
 })
 
+app.post('/concepts/generate', (req, res) => {
+  const { access_token } = cookie.parse(req.headers.cookie)
+  if (access_token == 'BJXPXtfJGEdBFSPttXwhgQFOwwJBHMhbDsyghhCRocNBoGoGPbkqfvlvYglb') {
+    const eta = new Date()
+    eta.setTime(eta.getTime() + 11 * 60 * 60 * 1000)
+
+    const created = new Date()
+    created.setTime(created.getTime() - 1 * 60 * 60 * 1000)
+
+    res.json({
+      id: 999,
+      title: 'Sample title',
+      brief:
+        'The video will show a live-action man that his live-action female girlfriend attacking his village successfully. The male is getting angry and try to attack his girlfriend village getting block and loses. The live-action female is doing a victory dance.',
+      videos: [
+        {
+          id: 999,
+          in_progress: true,
+          created: created,
+          eta: eta,
+        },
+      ],
+    })
+  } else {
+    res.status(403).json({
+      message: 'Not authorized',
+    })
+  }
+})
+
+app.delete('/concepts/cancel', (req, res) => {
+  const { access_token } = cookie.parse(req.headers.cookie)
+  if (access_token == 'BJXPXtfJGEdBFSPttXwhgQFOwwJBHMhbDsyghhCRocNBoGoGPbkqfvlvYglb') {
+    res.json({ success: true })
+  } else {
+    res.status(403).json({
+      message: 'Not authorized',
+    })
+  }
+})
+
+app.get('/concepts/list', (req, res) => {
+  const { access_token } = cookie.parse(req.headers.cookie)
+  if (access_token == 'BJXPXtfJGEdBFSPttXwhgQFOwwJBHMhbDsyghhCRocNBoGoGPbkqfvlvYglb') {
+    const created = new Date()
+    created.setTime(created.getTime() - 1 * 60 * 60 * 1000)
+
+    res.json([
+      {
+        id: 1,
+        title: 'Sample title',
+        brief:
+          'The video will show a live-action man that his live-action female girlfriend attacking his village successfully. The male is getting angry and try to attack his girlfriend village getting block and loses. The live-action female is doing a victory dance.',
+        videos: [
+          {
+            id: 1,
+            in_progress: false,
+            created: created,
+            src: '/demo/file_example_MP4_640_3MG.mp4',
+            image: '/demo/Rectangle 22.png',
+          },
+        ],
+      },
+    ])
+  } else {
+    res.status(403).json({
+      message: 'Not authorized',
+    })
+  }
+})
+
+app.post('/iterations/iterate_video', (req, res) => {
+  const { access_token } = cookie.parse(req.headers.cookie)
+  if (access_token == 'BJXPXtfJGEdBFSPttXwhgQFOwwJBHMhbDsyghhCRocNBoGoGPbkqfvlvYglb') {
+    const created = new Date()
+    created.setTime(created.getTime() - 1 * 60 * 60 * 1000)
+
+    const eta = new Date()
+    eta.setTime(eta.getTime() + 11 * 60 * 60 * 1000)
+
+    const created2 = new Date()
+    created2.setTime(created.getTime() - 1 * 60 * 60 * 1000)
+
+    res.json({
+      id: 1,
+      title: 'Sample title',
+      brief:
+        'The video will show a live-action man that his live-action female girlfriend attacking his village successfully. The male is getting angry and try to attack his girlfriend village getting block and loses. The live-action female is doing a victory dance.',
+      videos: [
+        {
+          id: 1,
+          in_progress: false,
+          created: created,
+          src: '/demo/file_example_MP4_640_3MG.mp4',
+          image: '/demo/Rectangle 22.png',
+        },
+        {
+          id: 2,
+          in_progress: true,
+          created: created2,
+          eta: eta,
+        },
+      ],
+    })
+  } else {
+    res.status(403).json({
+      message: 'Not authorized',
+    })
+  }
+})
+
 app.post('/auth/logout', (req, res) => {
   const { email, password } = req.body
   res.json({ message: 'success' })
