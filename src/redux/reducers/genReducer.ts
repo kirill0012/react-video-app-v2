@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 import { Generation } from '../../services/concepts'
 import { IdeaItem, IdeaRequest } from '../../services/ideas'
@@ -67,7 +67,31 @@ export const {
 export const getGenerations = (state: RootState) => state.gen.generations
 export const getRequest = (state: RootState) => state.gen.request
 export const getRequestPending = (state: RootState) => state.gen.isGeneratingIdea
-export const getRequestAbility = (state: RootState) => !state.gen.isGeneratingIdea
 export const getIdea = (state: RootState) => state.gen.idea
+
+export const getGenerationsPendingCount = createSelector(getGenerations, (items) =>
+  items.reduce(
+    (subtotal, item) => subtotal + (item.videos.length > 0 && item.videos[0].in_progress ? 1 : 0),
+    0
+  )
+)
+export const getGenerateAbility = (state: RootState) =>
+  !state.gen.isGeneratingIdea &&
+  state.user.profile &&
+  getGenerationsPendingCount(state) < state.user.profile.generation_limits.concepts
+
+export const getIterationsPendingCount = createSelector(getGenerations, (items) =>
+  items.reduce(
+    (subtotal, item) =>
+      subtotal +
+      (item.videos.length > 1
+        ? item.videos.reduce((iterations, video) => iterations + (video.in_progress ? 1 : 0), 0)
+        : 0),
+    0
+  )
+)
+export const getIterateAbility = (state: RootState) =>
+  state.user.profile &&
+  getIterationsPendingCount(state) < state.user.profile.generation_limits.iterations
 
 export default gen.reducer

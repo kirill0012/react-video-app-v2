@@ -55,8 +55,8 @@ app.get('/user/profile', (req, res) => {
         avatar: '/demo/image 14.png',
       },
       generation_limits: {
-        concept: 1,
-        iterations: 2,
+        concepts: 1,
+        iterations: 5,
       },
     })
   } else {

@@ -1,9 +1,6 @@
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { useState } from 'react'
-
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import UnfoldMoreOutlinedIcon from '@mui/icons-material/UnfoldMoreOutlined'
 
 import {
@@ -20,7 +17,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux'
 
 import {
-  getRequestAbility,
+  getGenerateAbility,
   setRequestRunning,
   setIdea,
   setRequest,
@@ -48,7 +45,7 @@ export interface RequestFormData {
 
 const IdeaRequest = () => {
   const dispatch = useDispatch()
-  const disabled = !useSelector(getRequestAbility)
+  const isDisabled = !useSelector(getGenerateAbility)
 
   const {
     control,
@@ -124,7 +121,7 @@ const IdeaRequest = () => {
                 onBlur={onBlur}
                 onChange={onChange}
                 IconComponent={UnfoldMoreOutlinedIcon}
-                disabled={disabled}
+                disabled={isDisabled}
                 MenuProps={{
                   sx: {
                     '& .MuiMenu-paper': {
@@ -171,7 +168,7 @@ const IdeaRequest = () => {
                 onBlur={onBlur}
                 onChange={onChange}
                 IconComponent={UnfoldMoreOutlinedIcon}
-                disabled={disabled}
+                disabled={isDisabled}
                 MenuProps={{
                   sx: {
                     '& .MuiMenu-paper': {
@@ -218,7 +215,7 @@ const IdeaRequest = () => {
                 onBlur={onBlur}
                 onChange={onChange}
                 IconComponent={UnfoldMoreOutlinedIcon}
-                disabled={disabled}
+                disabled={isDisabled}
                 MenuProps={{
                   sx: {
                     '& .MuiMenu-paper': {
@@ -280,7 +277,7 @@ const IdeaRequest = () => {
         {/*  </div>*/}
         {/*</FormControl>*/}
 
-        {!disabled && (
+        {!isDisabled && (
           <Button
             fullWidth
             size="large"
@@ -294,7 +291,7 @@ const IdeaRequest = () => {
               fontSize: '18px',
               fontWeight: '400',
             }}
-            disabled={disabled}
+            disabled={isDisabled}
           >
             Generate
           </Button>

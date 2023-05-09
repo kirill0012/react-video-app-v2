@@ -12,7 +12,6 @@ import IterateConceptComponent, { IterateFormData } from '../Dialogs/IterateConc
 type Props = {
   index: number
   generation: Generation
-  iterationDisabled: boolean
 }
 
 const ConceptItemComponent = (props: Props) => {
@@ -153,7 +152,6 @@ const ConceptItemComponent = (props: Props) => {
         open={isPlayerOpen}
         video={selectedVideo}
         onClose={handlePlayerClose}
-        iterationDisabled={props.iterationDisabled}
         onIterate={openVideoIterate}
         onRateQuality={openVideoRate}
       />

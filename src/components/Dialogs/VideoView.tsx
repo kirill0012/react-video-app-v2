@@ -6,7 +6,11 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import DownloadIcon from '@mui/icons-material/Download'
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
 import { useSelector } from 'react-redux'
-import { getGenerations } from '../../redux/reducers/genReducer'
+import {
+  getGenerations,
+  getIterateAbility,
+  getIterationsPendingCount,
+} from '../../redux/reducers/genReducer'
 
 import { VideoItem } from '../../services/concepts'
 import CustomDownloadButton from '../Dialogs/DownloadButton'
@@ -16,7 +20,6 @@ type Props = {
   onClose: () => void
   onRateQuality: (video: VideoItem) => void
   onIterate: (video: VideoItem) => void
-  iterationDisabled: boolean
 }
 
 const style = {
@@ -48,6 +51,11 @@ const ButtonSecondaryWrapper = styled(Button)<
 const VideoViewComponent = (props: Props) => {
   const { video } = props
   if (!video) return null
+
+  const isDisabled = !useSelector(getIterateAbility)
+  const iterationsPending = useSelector(getIterationsPendingCount)
+
+  console.log([isDisabled, iterationsPending])
 
   const generations = useSelector(getGenerations)
   const generation = generations.find((gen) => gen.videos.find((vid) => vid.id === video.id))
@@ -102,7 +110,7 @@ const VideoViewComponent = (props: Props) => {
             size="large"
             type="submit"
             variant="contained"
-            disabled={props.iterationDisabled}
+            disabled={isDisabled}
             onClick={() => props.onIterate(video)}
           >
             <EditIcon sx={{ mr: '10px' }} />
