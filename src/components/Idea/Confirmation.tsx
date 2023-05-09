@@ -1,4 +1,4 @@
-import { Button, ButtonProps, Paper, styled, Typography } from '@mui/material'
+import { Button, ButtonProps, CircularProgress, Paper, styled, Typography } from '@mui/material'
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined'
 import { IdeaItem, IdeaRequest, IdeasAPI } from '../../services/ideas'
 
@@ -65,6 +65,34 @@ const IdeaConfirmation = () => {
       .finally(() => {
         dispatch(setRequestRunning(false))
       })
+  }
+
+  if (requestPending) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '500px', // Fixed height
+          width: '500px', // Fixed width
+          boxSizing: 'border-box', // This ensures the height and width include padding and border
+        }}
+      >
+        <CircularProgress size={75} thickness={5} color={'primary'} />
+        <div
+          style={{
+            marginTop: '45px',
+            fontSize: '1.25rem', // Larger font size
+            fontWeight: 'bold', // Bold text
+            color: '#3f51b5', // Same color as the "primary" CircularProgress
+          }}
+        >
+          Generating Your Ad-Summary Now...
+        </div>
+      </div>
+    )
   }
 
   return (
