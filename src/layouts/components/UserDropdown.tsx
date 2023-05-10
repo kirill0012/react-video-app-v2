@@ -18,6 +18,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { getUser, setUser } from '../../redux/reducers/userReducer'
 import { AuthAPI } from '../../services/auth'
+import { Skeleton } from '@mui/material'
 
 // ** Styled Components
 const BadgeContentSpan = styled('span')(({ theme }) => ({
@@ -36,10 +37,6 @@ const UserDropdown = () => {
   const navigate = useNavigate()
   const user = useSelector(getUser)
   const dispatch = useDispatch()
-
-  if (!user) {
-    return null
-  }
 
   const handleDropdownOpen = (event: SyntheticEvent) => {
     setAnchorEl(event.currentTarget)
@@ -67,29 +64,38 @@ const UserDropdown = () => {
 
   return (
     <Fragment>
-      <Typography sx={{ fontWeight: '500' }}>{user?.name}</Typography>
-      <Badge
-        overlap="circular"
-        onClick={handleDropdownOpen}
-        sx={{ ml: '8px', cursor: 'pointer' }}
-        badgeContent={<BadgeContentSpan />}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-      >
-        <Avatar
-          src={user?.avatar || undefined}
-          alt={user?.name}
-          onClick={handleDropdownOpen}
-          sx={{ width: 40, height: 40, bgcolor: deepPurple[500], color: 'white' }}
-        >
-          {user?.name
-            .split(/\s/)
-            .reduce((response, word) => (response += word.slice(0, 1)), '')
-            .substring(0, 2)}
-        </Avatar>
-      </Badge>
+      {user ? (
+        <>
+          <Typography sx={{ fontWeight: '500' }}>{user?.name}</Typography>
+          <Badge
+            overlap="circular"
+            onClick={handleDropdownOpen}
+            sx={{ ml: '8px', cursor: 'pointer' }}
+            badgeContent={<BadgeContentSpan />}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+          >
+            <Avatar
+              src={user?.avatar || undefined}
+              alt={user?.name}
+              onClick={handleDropdownOpen}
+              sx={{ width: 40, height: 40, bgcolor: deepPurple[500], color: 'white' }}
+            >
+              {user?.name
+                .split(/\s/)
+                .reduce((response, word) => (response += word.slice(0, 1)), '')
+                .substring(0, 2)}
+            </Avatar>
+          </Badge>
+        </>
+      ) : (
+        <>
+          <Skeleton variant="text" sx={{ fontSize: '1rem', width: '70px' }} />
+          <Skeleton variant="circular" width={40} height={40} sx={{ ml: '8px' }} />
+        </>
+      )}
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
