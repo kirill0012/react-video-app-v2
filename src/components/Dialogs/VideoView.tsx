@@ -6,11 +6,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import DownloadIcon from '@mui/icons-material/Download'
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
 import { useSelector } from 'react-redux'
-import {
-  getGenerations,
-  getIterateAbility,
-  getIterationsPendingCount,
-} from '../../redux/reducers/genReducer'
+import { getGenerations, getIterateAbility } from '../../redux/reducers/genReducer'
 
 import { VideoItem } from '../../services/concepts'
 import CustomDownloadButton from '../Dialogs/DownloadButton'
@@ -53,9 +49,6 @@ const VideoViewComponent = (props: Props) => {
   if (!video) return null
 
   const isDisabled = !useSelector(getIterateAbility)
-  const iterationsPending = useSelector(getIterationsPendingCount)
-
-  console.log([isDisabled, iterationsPending])
 
   const generations = useSelector(getGenerations)
   const generation = generations.find((gen) => gen.videos.find((vid) => vid.id === video.id))
@@ -100,7 +93,11 @@ const VideoViewComponent = (props: Props) => {
           }
           light={
             <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-              <img src={video.image} style={{ objectFit: 'cover' }} alt="Thumbnail" />
+              <img
+                src={video.image}
+                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                alt="Thumbnail"
+              />
             </div>
           }
         />

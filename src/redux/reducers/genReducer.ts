@@ -5,6 +5,7 @@ import { IdeaItem, IdeaRequest } from '../../services/ideas'
 
 type GenState = {
   generations: Generation[]
+  isGenLoading: boolean
   request: IdeaRequest | null
   isGeneratingIdea: boolean
   idea: IdeaItem | null
@@ -12,6 +13,7 @@ type GenState = {
 
 const initialState: GenState = {
   generations: [],
+  isGenLoading: false,
   request: null,
   isGeneratingIdea: false,
   idea: null,
@@ -52,12 +54,16 @@ export const gen = createSlice({
     setIdea: (state, action: PayloadAction<IdeaItem | null>) => {
       state.idea = action.payload
     },
+    setGenLoading: (state, action: PayloadAction<boolean>) => {
+      state.isGenLoading = action.payload
+    },
   },
 })
 
 export const {
   loadGenerations,
   addGeneration,
+  setGenLoading,
   cancelVideo,
   setRequest,
   setRequestRunning,
@@ -65,6 +71,7 @@ export const {
 } = gen.actions
 
 export const getGenerations = (state: RootState) => state.gen.generations
+export const getGenLoading = (state: RootState) => state.gen.isGenLoading
 export const getRequest = (state: RootState) => state.gen.request
 export const getRequestPending = (state: RootState) => state.gen.isGeneratingIdea
 export const getIdea = (state: RootState) => state.gen.idea

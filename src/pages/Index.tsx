@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { setUser, setProfile } from '../redux/reducers/userReducer'
-import { loadGenerations } from '../redux/reducers/genReducer'
+import { loadGenerations, setGenLoading } from '../redux/reducers/genReducer'
 import { AuthAPI } from '../services/auth'
 
 // ** Layout Import
@@ -46,12 +46,16 @@ function Index() {
         navigate('/login')
       })
 
+    dispatch(setGenLoading(true))
     ConceptsAPI.listConcepts()
       .then((generations) => {
         dispatch(loadGenerations(generations))
       })
       .catch((error) => {
         console.log(error)
+      })
+      .finally(() => {
+        dispatch(setGenLoading(false))
       })
   }, [])
 

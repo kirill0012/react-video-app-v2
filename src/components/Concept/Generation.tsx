@@ -26,7 +26,11 @@ const ConceptGenerationComponent = (props: Props) => {
           style={{ width: '400px', height: '250px', position: 'relative', cursor: 'pointer' }}
           onClick={() => props.onVideoClick(video)}
         >
-          <img src={video.image} alt="thumb" style={{ objectFit: 'cover', borderRadius: '16px' }} />
+          <img
+            src={video.image}
+            alt="thumb"
+            style={{ objectFit: 'cover', borderRadius: '16px', width: '100%', height: '100%' }}
+          />
           <div style={{ position: 'absolute', left: 0, top: 0, height: '100%', width: '100%' }}>
             <PlayCircleOutlineIcon
               sx={{
