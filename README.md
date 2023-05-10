@@ -1,46 +1,109 @@
-# Getting Started with Create React App
+# React video app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Project directory layout
 
-## Available Scripts
+    .
+    ├── mock                    # API emulation server
+    ├── public                  # Folder for any public static files
+    ├── src                     # App source files
+    │   ├── components          
+    │   │   ├── Concept/*       # Components related to Concepts representation, Generations, Idea
+    │   │   ├── Dialogs/*       # Modal dialogs: Iterate, Rate, Video display
+    │   │   ├── Idea/*          # Components related to Idea generation
 
-In the project directory, you can run:
+    │   ├── constants           
+    │   │   ├── endpoints.ts    # List of the API endpoints urls
+    │   │   ├── iteration.ts    # List of the Iteration actions
 
-### `npm start`
+    │   ├── layouts           
+    │   │   ├── BlankLayout.tsx # Page layout for guest full-page forms (Login, Forgot password, etc)
+    │   │   ├── UserLayout.tsx  # Page layout for logged in users with top bar
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+    │   ├── pages           
+    │   │   ├── Login.tsx       # Login page
+    │   │   ├── Index.ts        # Main page of the app
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+    │   ├── redux
+    │   │   ├── reducers       
+    │   │   │   ├── genReducer.ts   # Store and use data related to video/idea generation
+    │   │   │   ├── userReducer.ts  # Process user and profile info
 
-### `npm test`
+    │   ├── services            # Service layer for API calls
+    │   │   ├── auth.ts         # Auth (login/logout)
+    │   │   ├── concepts.ts     # Concepts (generate, cancel, list, iterate)
+    │   │   ├── ideas.ts        # Ideas generation
+    │   │   ├── videos.ts       # Videos rate
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    ├── App.tsx                 # Router setup
+    ├── index.tsx               # Main entry point and redux setup
 
-### `npm run build`
+### Components hierarchy
+    ├── index.tsx                  
+    │   ├── MyProject                        # Project header
+    │   ├── IdeaConfirmation                 # Idea generation
+    |   ├── ConceptsList                     # General component for concepts
+    |   |   ├── ConceptItemComponent         # Representation of Concept item
+    |   |   |   ├── ConceptGenerationComponent
+    |   |   |   ├── VideoViewComponent
+    |   |   |   ├── RateQualityComponent
+    |   |   |   ├── IterateConceptComponent
+    |   ├── IdeaRequest                      # Form for concept request
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Datatypes
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+> All service files contains TypeScript typings for expected API responses
 
-### `npm run eject`
+### User info
+```
+export type UserDataType = {
+  id: number
+  name: string
+  avatar?: string | null
+}
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+export type Profile = {
+  project: {
+    title: string
+    avatar: string | null
+  } | null
+  generation_limits: {
+    concepts: number
+    iterations: number
+  }
+}
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Concepts items
+```
+export type ConceptItem = {
+  id: number
+  generations: Array<Generation>
+}
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+export type Generation = {
+  id: number
+  ref: string
+  brief: string
+  inProgress: boolean
+  created: Date | string
+  eta?: Date | string
+  videos: Array<VideoItem>
+}
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+export type VideoItem = {
+  id: number
+  src: string
+  image: string
+  name: string
+}
+```
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Idea item
+```
+export type IdeaItem = {
+  id: number
+  title: string
+  description: string
+} | null
+```
