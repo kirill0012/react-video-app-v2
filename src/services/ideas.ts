@@ -20,13 +20,10 @@ export type IdeaItem = {
 
 export const IdeasAPI = {
   generateIdea: async (ideaRequest: IdeaRequest): Promise<IdeaItem> => {
-    const access_token = Cookies.get('access_token')
-
     const response = await request
       .request<IdeaItem>({
         url: endpoints.ideaGenerateEndpoint,
         method: 'POST',
-        headers: { Authorization: `Bearer ${access_token}` },
         data: {
           concept_name: ideaRequest.concept_name,
           game_id: ideaRequest.game_id,

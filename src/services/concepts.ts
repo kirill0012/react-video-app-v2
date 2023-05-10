@@ -42,13 +42,10 @@ export interface EditAdVideoInput {
 
 export const ConceptsAPI = {
   generateConcept: async (idea: IdeaItem): Promise<Generation> => {
-    const access_token = Cookies.get('access_token')
-
     const response = await request
       .request<Generation>({
         url: endpoints.conceptGenerateEndpoint,
         method: 'POST',
-        headers: { Authorization: `Bearer ${access_token}` },
         data: {
           title: idea.title,
           summary: idea.summary,
@@ -64,13 +61,10 @@ export const ConceptsAPI = {
     return Promise.resolve(response.data)
   },
   cancelGeneration: async (id: string): Promise<boolean> => {
-    const access_token = Cookies.get('access_token')
-
     await request
       .request({
         url: endpoints.conceptCancelGenerationEndpoint,
         method: 'DELETE',
-        headers: { Authorization: `Bearer ${access_token}` },
         data: {
           video_item_id: id,
         },
@@ -93,24 +87,11 @@ export const ConceptsAPI = {
 
     return Promise.resolve(response.data)
   },
-  listConceptsServerSide: async (access_token: string | undefined): Promise<Generation[]> => {
-    return axios
-      .get<Generation[]>(`${process.env.REACT_APP_API_URL_PROD}${endpoints.conceptsListEndpoint}`, {
-        headers: access_token ? { Authorization: `Bearer ${access_token}` } : undefined,
-        withCredentials: true,
-      })
-      .then((response) => {
-        return response.data
-      })
-  },
   getGenerationById: async (id: string): Promise<Generation> => {
-    const access_token = Cookies.get('access_token')
-
     const response = await request
       .request<Generation>({
         url: endpoints.getGenerationEndpoint,
         method: 'GET',
-        headers: { Authorization: `Bearer ${access_token}` },
         params: { id },
       })
       .catch(() => {
@@ -125,8 +106,6 @@ export const ConceptsAPI = {
     transcript: string,
     remove: Array<number>
   ): Promise<Generation> => {
-    const access_token = Cookies.get('access_token')
-
     // Convert the transcript string into an array of TextEditInput
     const textPairs = transcript.split(/"{2}/).filter((t) => t) // Split the string by double quotes and remove empty strings
     const textEdits: TextEditInput[] = []
@@ -155,7 +134,6 @@ export const ConceptsAPI = {
     const response = await request
       .request<Generation>({
         url: endpoints.conceptIterateEndpoint,
-        headers: { Authorization: `Bearer ${access_token}` },
         method: 'POST',
         data: {
           video_item_id: videoId,

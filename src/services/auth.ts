@@ -59,18 +59,10 @@ export const AuthAPI = {
     return response.data
   },
   profile: async (): Promise<Profile> => {
-    const access_token = Cookies.get('access_token')
-    const refresh_token = Cookies.get('refresh_token')
     return await request
       .request({
         url: endpoints.profileEndpoint,
         method: 'GET',
-        headers: access_token
-          ? {
-              Authorization: `Bearer ${access_token}`,
-              'X-Refresh-Token': `Bearer ${refresh_token}`,
-            }
-          : undefined,
         withCredentials: true,
       })
       .then((response) => {
@@ -81,16 +73,10 @@ export const AuthAPI = {
       })
   },
   me: async (): Promise<UserDataType> => {
-    const access_token = Cookies.get('access_token')
-    const refresh_token = Cookies.get('refresh_token')
     const response = await request
       .request({
         url: endpoints.meEndpoint,
         method: 'GET',
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-          'X-Refresh-Token': `Bearer ${refresh_token}`,
-        },
       })
       .catch((error) => {
         return Promise.reject(error)
