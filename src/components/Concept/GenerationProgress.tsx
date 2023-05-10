@@ -26,11 +26,6 @@ const ConceptGenerationProgressComponent = (props: Props) => {
     await ConceptsAPI.cancelGeneration(id).then((isDeleted) => {
       dispatch(cancelVideo(id))
     })
-
-    // does it necessary anymore?
-    // setCanceledGeneration(true)
-    // const access_token = Cookies.get('access_token')
-    // await ConceptsAPI.listConceptsServerSide(access_token)
   }
 
   useEffect(() => {
