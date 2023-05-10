@@ -33,23 +33,6 @@ const IdeaConfirmation = () => {
   const request = useSelector(getRequest)
   const requestPending = useSelector(getRequestPending)
 
-  if (idea == null) return null
-  if (requestPending) return null
-
-  const onConfirm = () => {
-    Mixpanel.track('Confirm Ad Script', { idea: idea })
-    ConceptsAPI.generateConcept(idea)
-      .then((gen) => {
-        dispatch(addGeneration(gen))
-      })
-      .catch(() => {
-        //
-      })
-      .finally(() => {
-        dispatch(setIdea(null))
-      })
-  }
-
   const onRegenerate = () => {
     Mixpanel.track('Re-Generate Ad Script')
     dispatch(setRequestRunning(true))
@@ -69,30 +52,45 @@ const IdeaConfirmation = () => {
 
   if (requestPending) {
     return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '500px', // Fixed height
-          width: '500px', // Fixed width
-          boxSizing: 'border-box', // This ensures the height and width include padding and border
+      <Paper
+        sx={{
+          p: '24px',
+          margin: 'auto',
+          backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
+          borderRadius: '16px',
+          mb: '24px',
         }}
       >
-        <CircularProgress size={75} thickness={5} color={'primary'} />
         <div
           style={{
-            marginTop: '45px',
             fontSize: '1.25rem', // Larger font size
             fontWeight: 'bold', // Bold text
-            color: '#3f51b5', // Same color as the "primary" CircularProgress
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
+          <CircularProgress color={'primary'} sx={{ marginRight: '10px' }} />
           Generating Your Ad-Summary Now...
         </div>
-      </div>
+      </Paper>
     )
+  }
+
+  if (idea == null) return null
+
+  const onConfirm = () => {
+    Mixpanel.track('Confirm Ad Script', { idea: idea })
+    ConceptsAPI.generateConcept(idea)
+      .then((gen) => {
+        dispatch(addGeneration(gen))
+      })
+      .catch(() => {
+        //
+      })
+      .finally(() => {
+        dispatch(setIdea(null))
+      })
   }
 
   return (
