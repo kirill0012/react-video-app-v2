@@ -1,6 +1,5 @@
 import endpoints from '../constants/endpoints'
 import request from '../lib/api/request'
-import Cookies from 'js-cookie'
 
 export type IdeaRequest = {
   concept_name: string

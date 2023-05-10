@@ -1,6 +1,5 @@
 import endpoints from '../constants/endpoints'
 import request from '../lib/api/request'
-import axios from 'axios'
 import Cookies from 'js-cookie'
 
 export type UserDataType = {

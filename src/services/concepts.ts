@@ -1,9 +1,6 @@
 import endpoints from '../constants/endpoints'
 import request from '../lib/api/request'
 import { IdeaItem } from './ideas'
-import axios from 'axios'
-import Cookies from 'js-cookie'
-import { removeElements } from '../constants/iteration'
 
 export type Generation = {
   id: string
