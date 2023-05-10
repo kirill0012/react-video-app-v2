@@ -1,6 +1,6 @@
 import { Button, ButtonProps, CircularProgress, Paper, styled, Typography } from '@mui/material'
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined'
-import { IdeaItem, IdeaRequest, IdeasAPI } from '../../services/ideas'
+import { IdeaRequest, IdeasAPI } from '../../services/ideas'
 
 import { useSelector, useDispatch } from 'react-redux'
 import {

@@ -7,7 +7,7 @@ import { Generation, VideoItem } from '../../services/concepts'
 import ConceptGenerationComponent from './Generation'
 import VideoViewComponent from '../Dialogs/VideoView'
 import RateQualityComponent from '../Dialogs/RateQuality'
-import IterateConceptComponent, { IterateFormData } from '../Dialogs/IterateConcept'
+import IterateConceptComponent from '../Dialogs/IterateConcept'
 
 type Props = {
   index: number

@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios'
+import axios from 'axios'
 import Cookies from 'js-cookie'
 
 export const API_URL = process.env.REACT_APP_API_URL_DEV

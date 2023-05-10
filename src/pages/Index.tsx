@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Grid } from '@mui/material'
 import '../App.css'
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { setUser, setProfile } from '../redux/reducers/userReducer'

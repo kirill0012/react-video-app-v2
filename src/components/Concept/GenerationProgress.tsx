@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import Cookies from 'js-cookie'
 import { Button, LinearProgress, Typography } from '@mui/material'
-import { VideoItem, Generation, ConceptsAPI } from '../../services/concepts'
+import { VideoItem, ConceptsAPI } from '../../services/concepts'
 import { Mixpanel } from '../../utils/Mixpanel'
 import { useDispatch } from 'react-redux'
 import { cancelVideo } from '../../redux/reducers/genReducer'
@@ -16,14 +15,13 @@ const ConceptGenerationProgressComponent = (props: Props) => {
 
   const dispatch = useDispatch()
   const [current, setCurrent] = useState(new Date())
-  const [canceledGeneration, setCanceledGeneration] = useState(false)
   const [buttonDisabled, setButtonDisabled] = useState(false)
 
   const handleCancelButtonClick = async (id: string) => {
     setButtonDisabled(true)
 
     Mixpanel.track('Cancel Generation', { generation_id: id })
-    await ConceptsAPI.cancelGeneration(id).then((isDeleted) => {
+    await ConceptsAPI.cancelGeneration(id).then(() => {
       dispatch(cancelVideo(id))
     })
   }
