@@ -6,11 +6,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   addGeneration,
   getIdea,
-  getRequestPending,
-  setRequestRunning,
+  getIdeaLoading,
+  setIdeaLoading,
   setIdea,
-  setRequest,
-  getRequest,
+  setIdeaRequest,
+  getIdeaRequest,
 } from '../../redux/reducers/genReducer'
 import { Mixpanel } from '../../utils/Mixpanel'
 import { ConceptsAPI } from '../../services/concepts'
@@ -30,12 +30,12 @@ const ButtonSecondaryWrapper = styled(Button)<ButtonProps>(() => ({
 const IdeaConfirmation = () => {
   const dispatch = useDispatch()
   const idea = useSelector(getIdea)
-  const request = useSelector(getRequest)
-  const requestPending = useSelector(getRequestPending)
+  const request = useSelector(getIdeaRequest)
+  const requestPending = useSelector(getIdeaLoading)
 
   const onRegenerate = () => {
     Mixpanel.track('Re-Generate Ad Script')
-    dispatch(setRequestRunning(true))
+    dispatch(setIdeaLoading(true))
     // request for another idea with conceptIdea.request data
     IdeasAPI.generateIdea(request as IdeaRequest)
       .then((idea) => {
@@ -43,10 +43,10 @@ const IdeaConfirmation = () => {
       })
       .catch(() => {
         dispatch(setIdea(null))
-        dispatch(setRequest(null))
+        dispatch(setIdeaRequest(null))
       })
       .finally(() => {
-        dispatch(setRequestRunning(false))
+        dispatch(setIdeaLoading(false))
       })
   }
 

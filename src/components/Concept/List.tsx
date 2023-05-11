@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 
 import {
   getGenerations,
-  getRequestPending,
+  getIdeaLoading,
   getIdea,
   getGenLoading,
 } from '../../redux/reducers/genReducer'
@@ -13,7 +13,7 @@ import {
 const ConceptsList = () => {
   const generations = useSelector(getGenerations)
   const conceptIdea = useSelector(getIdea)
-  const isGeneratingIdea = useSelector(getRequestPending)
+  const isGeneratingIdea = useSelector(getIdeaLoading)
   const isGenListLoading = useSelector(getGenLoading)
 
   if (isGenListLoading) {

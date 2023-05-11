@@ -45,10 +45,10 @@ export const gen = createSlice({
       })
       state.generations = newGen.filter((gen) => gen.videos.length > 0)
     },
-    setRequest: (state, action: PayloadAction<IdeaRequest | null>) => {
+    setIdeaRequest: (state, action: PayloadAction<IdeaRequest | null>) => {
       state.request = action.payload
     },
-    setRequestRunning: (state, action: PayloadAction<boolean>) => {
+    setIdeaLoading: (state, action: PayloadAction<boolean>) => {
       state.isGeneratingIdea = action.payload
     },
     setIdea: (state, action: PayloadAction<IdeaItem | null>) => {
@@ -65,15 +65,15 @@ export const {
   addGeneration,
   setGenLoading,
   cancelVideo,
-  setRequest,
-  setRequestRunning,
+  setIdeaRequest,
+  setIdeaLoading,
   setIdea,
 } = gen.actions
 
 export const getGenerations = (state: RootState) => state.gen.generations
 export const getGenLoading = (state: RootState) => state.gen.isGenLoading
-export const getRequest = (state: RootState) => state.gen.request
-export const getRequestPending = (state: RootState) => state.gen.isGeneratingIdea
+export const getIdeaRequest = (state: RootState) => state.gen.request
+export const getIdeaLoading = (state: RootState) => state.gen.isGeneratingIdea
 export const getIdea = (state: RootState) => state.gen.idea
 
 export const getGenerationsPendingCount = createSelector(getGenerations, (items) =>

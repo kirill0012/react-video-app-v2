@@ -6,21 +6,21 @@ import UnfoldMoreOutlinedIcon from '@mui/icons-material/UnfoldMoreOutlined'
 import {
   Button,
   FormControl,
-  IconButton,
+  // IconButton,
   MenuItem,
   Paper,
   Select,
-  TextField,
-  Tooltip,
+  // TextField,
+  // Tooltip,
 } from '@mui/material'
 
 import { useSelector, useDispatch } from 'react-redux'
 
 import {
   getGenerateAbility,
-  setRequestRunning,
+  setIdeaLoading,
   setIdea,
-  setRequest,
+  setIdeaRequest,
 } from '../../redux/reducers/genReducer'
 import { Mixpanel } from '../../utils/Mixpanel'
 import { IdeaRequest as Request, IdeasAPI } from '../../services/ideas'
@@ -49,7 +49,7 @@ const IdeaRequest = () => {
 
   const {
     control,
-    setError,
+    // setError,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -68,18 +68,18 @@ const IdeaRequest = () => {
     }
 
     Mixpanel.track('Generate Concept', { data: data })
-    dispatch(setRequestRunning(true))
+    dispatch(setIdeaLoading(true))
     IdeasAPI.generateIdea(postData)
       .then((idea) => {
         dispatch(setIdea(idea))
-        dispatch(setRequest(postData))
+        dispatch(setIdeaRequest(postData))
       })
       .catch(() => {
         dispatch(setIdea(null))
-        dispatch(setRequest(null))
+        dispatch(setIdeaRequest(null))
       })
       .finally(() => {
-        dispatch(setRequestRunning(false))
+        dispatch(setIdeaLoading(false))
       })
   }
 
