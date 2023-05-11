@@ -1,19 +1,13 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-export const API_URL = process.env.REACT_APP_API_URL_DEV
+export const API_URL = process.env.REACT_APP_API_URL_PROD
 // const isServer = typeof window === 'undefined'
 
 const $api = axios.create({
   withCredentials: true,
   baseURL: API_URL,
 })
-
-// const requestHandler = (request: AxiosRequestConfig) => {
-//   const access_token = Cookies.get('access_token')
-//   request.headers.Authorization = `Bearer ${access_token}`
-//   return request
-// }
 
 $api.interceptors.request.use(
   async (config) => {
