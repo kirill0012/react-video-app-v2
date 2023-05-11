@@ -76,26 +76,20 @@ export type Profile = {
 
 ### Concepts items
 ```
-export type ConceptItem = {
-  id: number
-  generations: Array<Generation>
-}
-
-export type Generation = {
-  id: number
-  ref: string
+Generation = {
+  id: string
+  title: string
   brief: string
-  inProgress: boolean
-  created: Date | string
-  eta?: Date | string
   videos: Array<VideoItem>
 }
 
 export type VideoItem = {
-  id: number
+  id: string
   src: string
   image: string
-  name: string
+  eta?: Date | string
+  created: Date | string
+  in_progress: boolean
 }
 ```
 
