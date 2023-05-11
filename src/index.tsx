@@ -1,16 +1,27 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
-import './index.css'
+import { CssBaseline, ThemeProvider } from '@mui/material'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import store from './redux/store'
+import lightTheme from './styles/theme/lightTheme'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <ThemeProvider theme={lightTheme}>
+        <CssBaseline />
+        <header>
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Public+Sans:400,500,600,700,900&display=swap"
+          />
+        </header>
+
+        <App />
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>
 )

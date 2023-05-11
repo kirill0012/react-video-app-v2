@@ -62,7 +62,6 @@ export const AuthAPI = {
       .request({
         url: endpoints.profileEndpoint,
         method: 'GET',
-        withCredentials: true,
       })
       .then((response) => {
         return response.data

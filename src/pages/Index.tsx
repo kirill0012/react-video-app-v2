@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { Grid } from '@mui/material'
-import '../App.css'
 
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
