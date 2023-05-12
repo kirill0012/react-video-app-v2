@@ -34,7 +34,7 @@ const MyProject = () => {
         >
           {!isLoading ? (
             <img
-              src={project.avatar || undefined}
+              src={project.avatar || '/images/ak_icon.png'}
               alt="thumb"
               width={60}
               height={60}
